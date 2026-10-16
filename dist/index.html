@@ -242,31 +242,66 @@
       .footer-bottom { display: grid; gap: 8px; }
       .modal { padding: 25px; }
     }
+    /* Refined home hero */
+    .hero-v2 { min-height: 830px; max-height: none; height: min(100svh, 920px); padding: 130px 0 56px; align-items: stretch; background: #0b0c0b; }
+    .hero-v2::before { background: linear-gradient(90deg, rgba(7,8,7,.96) 0%, rgba(7,8,7,.77) 48%, rgba(7,8,7,.3) 100%), linear-gradient(0deg, rgba(7,8,7,.9), transparent 45%); }
+    .hero-v2 .hero-photo { object-position: 62% center; opacity: .58; filter: saturate(.65) contrast(1.08); }
+    .hero-v2-grid { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, 1fr) minmax(360px, .72fr); gap: clamp(40px, 8vw, 130px); align-items: center; height: 100%; }
+    .hero-v2-copy { max-width: 700px; padding-top: 30px; }
+    .hero-v2-copy .eyebrow { color: var(--lime); }
+    .hero-v2-copy h1 { margin: 24px 0 24px; font-size: clamp(76px, 10.2vw, 154px); }
+    .hero-v2-copy h1 span { display: block; color: var(--lime); }
+    .hero-v2-copy .hero-sub { max-width: 530px; font-size: 16px; line-height: 1.7; }
+    .hero-v2-proof { display: flex; gap: 30px; margin-top: 48px; padding-top: 19px; border-top: 1px solid var(--line); max-width: 560px; }
+    .hero-v2-proof strong { display: block; color: var(--paper); font-size: 14px; }
+    .hero-v2-proof span { color: #8f988c; font-size: 10px; text-transform: uppercase; letter-spacing: .12em; }
+    .hero-v2-stage { position: relative; height: min(630px, 72vh); min-height: 510px; border: 1px solid rgba(244,245,239,.26); padding: 12px; transform: rotate(1.5deg); background: rgba(11,12,11,.32); }
+    .hero-v2-stage::before { content: ''; position: absolute; inset: 12px; border: 1px solid rgba(197,243,91,.45); transform: translate(16px,16px); pointer-events: none; }
+    .hero-v2-stage::after { content: 'THE MISSION / 01'; position: absolute; top: 28px; right: 25px; color: var(--lime); font: 10px 'DM Mono', monospace; letter-spacing: .12em; }
+    .hero-v2-stage img { width: 100%; height: 100%; object-fit: cover; object-position: 53% center; filter: saturate(.76) contrast(1.08); }
+    .hero-v2-stage-copy { position: absolute; z-index: 2; left: 27px; right: 27px; bottom: 25px; display: flex; align-items: end; justify-content: space-between; gap: 20px; }
+    .hero-v2-stage-copy strong { display: block; max-width: 230px; font: 38px/ .9 Oswald, sans-serif; text-transform: uppercase; }
+    .hero-v2-stage-copy p { max-width: 130px; margin: 0; color: #c2c9be; font-size: 11px; line-height: 1.4; }
+    .hero-v2-stage-copy::before { content: ''; position: absolute; inset: -60px -10px -25px; z-index: -1; background: linear-gradient(0deg, rgba(0,0,0,.78), transparent); }
+    .hero-v2-bottomline { position: absolute; z-index: 2; inset: auto 0 24px; display: flex; justify-content: space-between; color: #8d968c; }
+    .hero-v2-bottomline span:last-child { color: var(--lime); }
+    @media (max-width: 900px) {
+      .hero-v2 { height: auto; min-height: 930px; padding-top: 120px; }
+      .hero-v2-grid { grid-template-columns: 1fr; gap: 50px; }
+      .hero-v2-copy { padding-top: 10px; }
+      .hero-v2-copy h1 { font-size: clamp(72px, 16vw, 112px); }
+      .hero-v2-stage { height: 430px; min-height: 0; max-width: 520px; width: 100%; margin-left: auto; }
+      .hero-v2-bottomline { display: none; }
+    }
+    @media (max-width: 520px) { .hero-v2 { min-height: 850px; } .hero-v2-copy h1 { font-size: 70px; } .hero-v2-proof { gap: 16px; flex-wrap: wrap; } .hero-v2-stage { height: 360px; } }
   </style>
+  <link rel="stylesheet" href="site.css" />
 </head>
 <body>
   <header id="header">
     <div class="wrap nav">
       <a class="brand" href="#top" aria-label="The Mission Gym home"><span class="brand-mark" aria-hidden="true"></span><span>THE MISSION<br />GYM · EST. 2021</span></a>
       <nav class="nav-links" id="navLinks" aria-label="Primary navigation">
-        <a href="#philosophy">Philosophy</a><a href="#programs">Programs</a><a href="#memberships">Memberships</a><a href="#faq">FAQ</a>
+        <a href="about.html">About</a><a href="training.html">Training</a><a href="memberships.html">Memberships</a><a href="contact.html">Contact</a>
       </nav>
       <div class="nav-cta"><button class="btn btn-primary" data-open-modal>Start your mission <span>↗</span></button><button class="icon-btn mobile-toggle" id="mobileToggle" aria-label="Open menu">☰</button></div>
     </div>
   </header>
 
   <main id="top">
-    <section class="hero">
+    <section class="hero hero-v2">
       <img class="hero-photo" src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=2200&q=90" alt="Athlete training with a barbell in a dark gym" />
-      <div class="wrap hero-grid">
-        <div class="hero-copy reveal">
-          <div class="eyebrow mono">No shortcuts. Just work.</div>
-          <h1 class="display">Your mission.<span>Your strength.</span></h1>
-          <p class="hero-sub">A considered training space for people who show up with intent. Build the body. Sharpen the mind. Leave stronger.</p>
-          <div class="hero-actions"><button class="btn btn-primary" data-open-modal>Join the mission <span>↗</span></button><a class="btn" href="#memberships">Explore memberships <span>↓</span></a></div>
+      <div class="wrap hero-v2-grid">
+        <div class="hero-v2-copy reveal">
+          <div class="eyebrow mono">The Mission Gym / Est. 2021</div>
+          <h1 class="display">Train with<span>intent.</span></h1>
+          <p class="hero-sub">A focused training space for people who show up with purpose. Build the body. Sharpen the mind. Leave stronger.</p>
+          <div class="hero-actions"><button class="btn btn-primary" data-open-modal>Start your mission <span>↗</span></button><a class="btn" href="memberships.html">View memberships <span>↗</span></a></div>
+          <div class="hero-v2-proof"><div><strong>06:00 — 22:00</strong><span>Open every day</span></div><div><strong>Strength · Conditioning</strong><span>Your training, your pace</span></div><div><strong>01 / 01</strong><span>First step starts here</span></div></div>
         </div>
-        <div class="hero-side reveal"><div class="hero-note"><div><strong>EST. 2021</strong><span class="mono">Built for the committed</span></div><span class="brand-mark" aria-hidden="true"></span></div><div class="hero-scroll mono"><i></i><b></b> Scroll to explore</div></div>
+        <div class="hero-v2-stage reveal"><img src="https://images.unsplash.com/photo-1576678927484-cc907957088c?auto=format&fit=crop&w=1400&q=90" alt="Coach guiding an athlete through a strength movement" /><div class="hero-v2-stage-copy"><strong>Earn your confidence.</strong><p>Progress is built in the sessions you keep.</p></div></div>
       </div>
+      <div class="wrap hero-v2-bottomline mono"><span>Scroll to explore ↓</span><span>No shortcuts. Just work.</span></div>
     </section>
 
     <div class="ticker" aria-hidden="true"><div class="ticker-track"><span>Train hard</span><span>Stay consistent</span><span>Move with purpose</span><span>Earn your confidence</span><span>Train hard</span><span>Stay consistent</span><span>Move with purpose</span><span>Earn your confidence</span></div></div>
@@ -311,7 +346,7 @@
     <section class="faq" id="faq"><div class="wrap faq-grid"><div class="reveal"><div class="eyebrow mono">Good to know</div><h2 class="display">Questions,<br />answered.</h2></div><div class="reveal"><details open><summary>Can I try the gym before joining?</summary><p>Yes. Use the free trial form to share your details and our team can arrange an introduction to the space and a simple movement session.</p></details><details><summary>Which membership is right for me?</summary><p>Monthly is designed for flexibility, quarterly for building a consistent rhythm, and annual for members who are ready to make training a long-term priority.</p></details><details><summary>Do I need a training plan?</summary><p>Not at all. You can use the open gym independently or start with an onboarding session to help you build a plan around your goals.</p></details><details><summary>Is this the final pricing?</summary><p>These are editable sample prices included to demonstrate the membership experience. The gym team can update pricing, offers, benefits, and add-ons later.</p></details></div></div></section>
   </main>
 
-  <footer><div class="wrap"><div class="footer-top"><div class="footer-brand"><a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"></span><span>THE MISSION GYM</span></a><p>A premium training space for people who choose to show up. Est. 2021.</p></div><div><h4>Explore</h4><div class="footer-links"><a href="#philosophy">Philosophy</a><a href="#programs">Programs</a><a href="#memberships">Memberships</a><a href="#coaches">Coaches</a></div></div><div><h4>Visit</h4><div class="footer-links"><span>Mon — Sun · 6am — 10pm</span><span>Location to be added</span><a href="mailto:hello@themissiongym.in">hello@themissiongym.in</a></div></div></div><div class="footer-bottom"><span>© 2021 — 2026 The Mission Gym</span><span>Built for the committed ↗</span></div></div></footer>
+  <footer><div class="wrap"><div class="footer-top"><div class="footer-brand"><a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"></span><span>THE MISSION GYM</span></a><p>A premium training space for people who choose to show up. Est. 2021.</p></div><div><h4>Explore</h4><div class="footer-links"><a href="about.html">About</a><a href="training.html">Training</a><a href="memberships.html">Memberships</a><a href="contact.html">Contact</a></div></div><div><h4>Visit</h4><div class="footer-links"><span>Mon — Sun · 6am — 10pm</span><span>Location to be added</span><a href="mailto:hello@themissiongym.in">hello@themissiongym.in</a></div></div></div><div class="footer-bottom"><span>© 2021 — 2026 The Mission Gym</span><span>Built for the committed ↗</span></div></div></footer>
 
   <div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-label="Start your mission"><div class="modal" id="modal"><button class="icon-btn modal-close" id="modalClose" aria-label="Close dialog">×</button><div class="hidden-on-success"><div class="eyebrow mono" style="color:#52633a">Start here</div><h2 class="display">Make your<br />first move.</h2><p>Share a few details and we’ll help you find the right starting point.</p><form class="form" id="trialForm"><label>Name<input name="name" required placeholder="Your name" /></label><label>Mobile<input name="phone" required type="tel" placeholder="+91 00000 00000" /></label><label>What are you looking for?<select name="plan"><option>Free trial</option><option>Monthly membership</option><option>Quarterly membership</option><option>Annual membership</option></select></label><button class="btn" type="submit">Send enquiry <span>↗</span></button></form></div><div class="success" id="success"><span class="tag">Request received</span><strong>You’re on the list.</strong><p>Thanks — this concept flow is ready to connect to the gym’s enquiry CRM when the backend is added.</p><button class="btn btn-dark" style="margin-top:20px" id="successClose">Back to site</button></div></div></div>
   <script>

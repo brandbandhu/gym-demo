@@ -1,0 +1,10 @@
+const header = document.querySelector('.mp-header');
+const menu = document.querySelector('.mp-menu');
+const links = document.querySelector('.mp-links');
+if (header) window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 18), { passive:true });
+if (menu && links) menu.addEventListener('click', () => links.classList.toggle('open'));
+if (links) links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => links.classList.remove('open')));
+const observer = new IntersectionObserver(entries => entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); }), { threshold:.12 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+const form = document.querySelector('.mp-form form');
+if (form) form.addEventListener('submit', e => { e.preventDefault(); form.style.display='none'; document.querySelector('.form-success')?.classList.add('show'); });
