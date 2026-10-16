@@ -1,3 +1,4 @@
+const brandStyle = document.createElement('link'); brandStyle.rel = 'stylesheet'; brandStyle.href = 'brand.css'; document.head.appendChild(brandStyle);
 const pageStyle = document.createElement('link'); pageStyle.rel = 'stylesheet'; pageStyle.href = 'admin-pages-fixes.css'; document.head.appendChild(pageStyle);
 const pageKey = document.body.dataset.adminPage || location.pathname.split('/').pop().replace(/^admin-/, '').replace('.html', '') || 'overview';
 const page = pageKey === 'admin' ? 'overview' : pageKey;

@@ -1,3 +1,5 @@
+const brandStyle = document.createElement('link'); brandStyle.rel = 'stylesheet'; brandStyle.href = 'brand.css'; document.head.appendChild(brandStyle);
+document.querySelectorAll('.brand-mark,.mp-mark').forEach(mark => { mark.style.width = '46px'; mark.style.height = '46px'; });
 const header = document.querySelector('.mp-header');
 const menu = document.querySelector('.mp-menu');
 const links = document.querySelector('.mp-links');
