@@ -1,0 +1,23 @@
+.training-focus{padding:128px 0 136px}
+.training-focus-grid{display:grid;grid-template-columns:minmax(0,.84fr) minmax(420px,1.16fr);gap:clamp(55px,8vw,120px);align-items:center}
+.training-focus-copy{max-width:500px}
+.focus-kicker{margin-top:26px;color:#7b8d58}
+.training-focus-copy h2{font-size:clamp(64px,7.2vw,108px);margin:16px 0 22px}
+.training-focus-copy h2 span{display:block;color:#76963a}
+.training-focus-copy>p{max-width:430px;color:#657067;font-size:14px}
+.focus-principles{margin:34px 0 30px;border-top:1px solid rgba(11,12,11,.16)}
+.focus-principles>div{display:grid;grid-template-columns:32px 1fr;column-gap:14px;padding:13px 0;border-bottom:1px solid rgba(11,12,11,.16)}
+.focus-principles b{grid-row:span 2;color:#78963e;font:12px 'DM Mono',monospace}
+.focus-principles strong{font-size:12px}.focus-principles small{color:#6b756c;font-size:11px}
+.training-focus-media{height:600px;position:relative;overflow:hidden;background:#c6dca1;border:1px solid rgba(11,12,11,.16);padding:12px}
+.training-focus-media:before{content:'';position:absolute;z-index:1;inset:12px;border:1px solid rgba(197,243,91,.7);pointer-events:none}
+.training-focus-media img{width:100%;height:100%;object-fit:cover;object-position:58% center;filter:saturate(.72)}
+.focus-media-top{position:absolute;z-index:2;top:29px;right:29px;color:var(--lime)}
+.focus-media-bottom{position:absolute;z-index:2;left:30px;right:30px;bottom:28px}
+.focus-media-bottom:before{content:'';position:absolute;inset:-90px -20px -28px;z-index:-1;background:linear-gradient(0deg,rgba(0,0,0,.8),transparent)}
+.focus-media-bottom span{display:block;color:var(--lime);margin-bottom:9px}
+.focus-media-bottom strong{display:block;color:var(--paper);font:clamp(32px,4vw,57px)/.9 Oswald,sans-serif;text-transform:uppercase}
+.training-focus .btn-dark{color:var(--paper);background:var(--ink);border-color:var(--ink)}
+.training-focus .btn-dark:hover{background:#759536;border-color:#759536}
+@media(max-width:900px){.training-focus{padding:86px 0}.training-focus-grid{grid-template-columns:1fr;gap:42px}.training-focus-copy{max-width:680px}.training-focus-media{height:480px}}
+@media(max-width:520px){.training-focus-copy h2{font-size:66px}.training-focus-media{height:390px}.focus-media-bottom{left:22px;right:22px;bottom:22px}}
