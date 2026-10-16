@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#0b0c0b" />
+  <meta name="description" content="The Mission Gym — a considered space for people who train with intent." />
+  <title>The Mission Gym — Train with intent</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #0b0c0b;
+      --surface: #111311;
+      --surface-2: #171a17;
+      --line: rgba(240, 244, 230, .14);
+      --muted: #9aa097;
+      --paper: #f4f5ef;
+      --lime: #c5f35b;
+      --lime-soft: #d9ff89;
+      --orange: #f47c52;
+      --max: 1240px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--ink); color: var(--paper); font-family: Manrope, system-ui, sans-serif; font-size: 15px; line-height: 1.55; }
+    body.modal-open { overflow: hidden; }
+    a { color: inherit; text-decoration: none; }
+    button, input, textarea { font: inherit; }
+    button { cursor: pointer; }
+    img { max-width: 100%; display: block; }
+    .mono { font-family: 'DM Mono', monospace; text-transform: uppercase; letter-spacing: .14em; font-size: 10px; }
+    .display { font-family: Oswald, Impact, sans-serif; font-weight: 500; text-transform: uppercase; letter-spacing: -.025em; line-height: .92; }
+    .wrap { width: min(calc(100% - 48px), var(--max)); margin-inline: auto; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 10px; color: var(--lime); }
+    .eyebrow::before { content: ''; width: 28px; height: 1px; background: currentColor; }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 48px; padding: 0 20px; border: 1px solid var(--line); border-radius: 999px; color: var(--paper); background: transparent; font-size: 11px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; transition: background .25s, color .25s, border-color .25s, transform .25s; }
+    .btn:hover { transform: translateY(-2px); border-color: var(--lime); }
+    .btn-primary { color: var(--ink); background: var(--lime); border-color: var(--lime); }
+    .btn-primary:hover { background: var(--lime-soft); border-color: var(--lime-soft); }
+    .btn-dark { color: var(--ink); background: var(--paper); border-color: var(--paper); }
+    .btn-dark:hover { background: var(--lime); border-color: var(--lime); }
+    .icon-btn { width: 42px; height: 42px; display: grid; place-items: center; color: var(--paper); background: transparent; border: 1px solid var(--line); border-radius: 50%; transition: .25s; }
+    .icon-btn:hover { background: var(--lime); color: var(--ink); border-color: var(--lime); }
+
+    header { position: fixed; z-index: 10; inset: 0 0 auto; border-bottom: 1px solid transparent; transition: .25s; }
+    header.scrolled { background: rgba(11, 12, 11, .88); border-color: var(--line); backdrop-filter: blur(16px); }
+    .nav { height: 78px; display: flex; align-items: center; justify-content: space-between; }
+    .brand { display: flex; align-items: center; gap: 11px; font-weight: 800; letter-spacing: .04em; font-size: 13px; }
+    .brand-mark { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; color: var(--ink); background: var(--lime); position: relative; overflow: hidden; }
+    .brand-mark::before, .brand-mark::after { content: ''; position: absolute; border: 1px solid var(--ink); border-radius: 50%; width: 15px; height: 15px; }
+    .brand-mark::after { width: 5px; height: 5px; background: var(--ink); border: 0; }
+    .nav-links { display: flex; gap: 27px; align-items: center; margin-left: auto; margin-right: 30px; color: #bec3ba; font-size: 12px; }
+    .nav-links a { transition: color .2s; }
+    .nav-links a:hover { color: var(--lime); }
+    .nav-cta { display: flex; align-items: center; gap: 10px; }
+    .nav-cta .btn { min-height: 40px; padding-inline: 16px; font-size: 10px; }
+    .mobile-toggle { display: none; }
+
+    .hero { min-height: 760px; height: 100svh; max-height: 920px; position: relative; overflow: hidden; display: flex; align-items: flex-end; padding: 0 0 84px; }
+    .hero::before { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(7, 8, 7, .84) 0%, rgba(7, 8, 7, .4) 48%, rgba(7, 8, 7, .1) 100%), linear-gradient(0deg, rgba(7, 8, 7, .95), transparent 46%); z-index: 1; }
+    .hero-photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 54% center; filter: saturate(.72) contrast(1.05); transform: scale(1.04); animation: breathe 12s ease-in-out infinite alternate; }
+    @keyframes breathe { to { transform: scale(1.1); } }
+    .hero-grid { position: relative; z-index: 2; display: grid; grid-template-columns: 1.3fr .7fr; gap: 40px; align-items: end; }
+    .hero-copy { max-width: 740px; }
+    .hero h1 { margin: 20px 0 22px; font-size: clamp(64px, 10.3vw, 158px); }
+    .hero h1 span { color: var(--lime); display: block; }
+    .hero-sub { max-width: 470px; color: #c3c8bf; font-size: 16px; }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 11px; margin-top: 30px; }
+    .hero-side { display: flex; flex-direction: column; align-items: flex-end; gap: 28px; padding-bottom: 5px; }
+    .hero-note { display: flex; gap: 12px; align-items: center; text-align: right; color: #c8cdc3; font-size: 12px; }
+    .hero-note strong { display: block; color: var(--paper); font-size: 19px; }
+    .hero-scroll { display: flex; align-items: center; gap: 12px; color: #bec3ba; }
+    .hero-scroll i { display: block; width: 42px; height: 1px; background: var(--lime); }
+    .hero-scroll b { width: 8px; height: 8px; border-radius: 50%; background: var(--lime); animation: pulse 1.8s ease infinite; }
+    @keyframes pulse { 0%,100% { opacity: .35; transform: scale(.8) } 50% { opacity: 1; transform: scale(1.15) } }
+
+    .ticker { overflow: hidden; border-block: 1px solid var(--line); background: var(--lime); color: var(--ink); }
+    .ticker-track { display: flex; width: max-content; gap: 34px; padding: 14px 0; animation: marquee 26s linear infinite; }
+    .ticker span { display: inline-flex; gap: 34px; align-items: center; font-family: Oswald, sans-serif; font-size: 16px; text-transform: uppercase; letter-spacing: .08em; }
+    .ticker span::after { content: '✳'; font-family: sans-serif; font-size: 13px; }
+    @keyframes marquee { to { transform: translateX(-50%); } }
+
+    section { padding: 120px 0; }
+    .section-head { display: flex; justify-content: space-between; gap: 30px; align-items: end; margin-bottom: 52px; }
+    .section-head h2 { margin: 14px 0 0; font-size: clamp(48px, 6.8vw, 94px); max-width: 780px; }
+    .section-head p { max-width: 320px; color: var(--muted); margin: 0 0 5px; }
+    .intro { background: var(--paper); color: var(--ink); }
+    .intro .eyebrow { color: #52633a; }
+    .intro-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: 70px; align-items: center; }
+    .intro h2 { margin: 0; font-size: clamp(48px, 6.5vw, 88px); }
+    .intro h2 em { color: #739634; font-style: normal; }
+    .intro-copy p { max-width: 510px; color: #566057; font-size: 17px; }
+    .intro-stats { display: flex; gap: 44px; margin-top: 34px; padding-top: 24px; border-top: 1px solid rgba(11, 12, 11, .15); }
+    .stat strong { display: block; font-size: 33px; letter-spacing: -.05em; }
+    .stat span { display: block; color: #657066; font-size: 11px; text-transform: uppercase; letter-spacing: .1em; }
+    .intro-image { min-height: 530px; position: relative; overflow: hidden; }
+    .intro-image img { width: 100%; height: 100%; min-height: 530px; object-fit: cover; filter: grayscale(.2); }
+    .image-caption { position: absolute; left: 22px; bottom: 20px; padding: 9px 12px; background: rgba(11,12,11,.74); color: var(--paper); }
+
+    .dark-section { background: var(--surface); }
+    .program-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .program-card { min-height: 430px; padding: 28px; border: 1px solid var(--line); background: var(--surface-2); position: relative; overflow: hidden; transition: transform .3s, border-color .3s; }
+    .program-card:hover { transform: translateY(-7px); border-color: rgba(197,243,91,.55); }
+    .program-card::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 30%, rgba(0,0,0,.65)); pointer-events: none; }
+    .program-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .58; transition: transform .5s, opacity .4s; }
+    .program-card:hover img { transform: scale(1.06); opacity: .72; }
+    .program-card > *:not(img) { position: relative; z-index: 1; }
+    .program-no { color: var(--lime); }
+    .program-card h3 { position: absolute; bottom: 48px; margin: 0; font-size: 35px; }
+    .program-card p { position: absolute; bottom: 18px; margin: 0; color: #c2c7bf; font-size: 12px; }
+    .program-arrow { position: absolute; right: 24px; top: 24px; font-size: 24px; color: var(--lime); }
+
+    .plans { background: #e6e9df; color: var(--ink); }
+    .plans .eyebrow { color: #52633a; }
+    .plans .section-head p { color: #6b746b; }
+    .plan-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; align-items: stretch; }
+    .plan { border: 1px solid rgba(11,12,11,.16); padding: 28px; display: flex; min-height: 390px; flex-direction: column; position: relative; background: rgba(255,255,255,.24); }
+    .plan.featured { background: var(--ink); color: var(--paper); border-color: var(--ink); transform: translateY(-15px); box-shadow: 0 22px 50px rgba(11,12,11,.14); }
+    .plan-badge { position: absolute; top: 0; right: 0; background: var(--lime); color: var(--ink); padding: 7px 12px; font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: .08em; }
+    .plan h3 { font-size: 28px; margin: 24px 0 5px; }
+    .plan .duration { color: #718071; font-size: 12px; }
+    .plan.featured .duration { color: #98a493; }
+    .price { margin: 27px 0; font-family: Oswald, sans-serif; font-size: 58px; line-height: 1; }
+    .price small { font-family: Manrope; font-size: 12px; color: #788177; }
+    .plan ul { padding: 0; margin: 0 0 24px; list-style: none; border-top: 1px solid rgba(11,12,11,.12); }
+    .plan.featured ul { border-color: var(--line); }
+    .plan li { padding: 11px 0; border-bottom: 1px solid rgba(11,12,11,.12); color: #556055; font-size: 12px; }
+    .plan.featured li { border-color: var(--line); color: #c1c8bc; }
+    .plan li::before { content: '↗'; color: #709432; margin-right: 8px; }
+    .plan .btn { margin-top: auto; }
+    .plan:not(.featured) .btn { color: var(--ink); border-color: rgba(11,12,11,.2); }
+    .plan:not(.featured) .btn:hover { background: var(--ink); color: var(--paper); }
+
+    .experience { background: var(--ink); }
+    .experience-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .experience-panel { min-height: 430px; padding: 42px; border: 1px solid var(--line); position: relative; overflow: hidden; }
+    .experience-panel img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: .35; }
+    .experience-panel > *:not(img) { position: relative; z-index: 1; }
+    .experience-panel h3 { max-width: 430px; font-size: 47px; margin: 25px 0 14px; }
+    .experience-panel p { max-width: 370px; color: #b7beb4; }
+    .experience-panel .btn { position: absolute; left: 42px; bottom: 37px; }
+    .dash-preview { padding: 22px; background: #202520; border-color: #2e3a2d; }
+    .dash-preview h3 { margin: 16px 0 28px; font-size: 32px; }
+    .dash-top { display: flex; justify-content: space-between; align-items: center; }
+    .dash-avatar { width: 32px; height: 32px; display: grid; place-items: center; border-radius: 50%; background: var(--lime); color: var(--ink); font-size: 11px; font-weight: 800; }
+    .dash-row { display: grid; grid-template-columns: 1fr auto; gap: 20px; padding: 13px 0; border-bottom: 1px solid var(--line); color: #a9b1a7; font-size: 12px; }
+    .dash-row strong { color: var(--paper); }
+    .progress { height: 5px; margin-top: 13px; background: #364031; }
+    .progress i { display: block; width: 72%; height: 100%; background: var(--lime); }
+    .tag { display: inline-flex; color: var(--lime); border: 1px solid rgba(197,243,91,.3); border-radius: 999px; padding: 4px 8px; font-size: 9px; text-transform: uppercase; letter-spacing: .08em; }
+
+    .coaches { background: var(--surface); }
+    .coach-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr; gap: 13px; }
+    .coach { position: relative; min-height: 480px; overflow: hidden; background: #252924; }
+    .coach img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(.35); transition: transform .5s; }
+    .coach:hover img { transform: scale(1.05); }
+    .coach::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(11,12,11,.85), transparent 55%); }
+    .coach:first-child { min-height: 550px; }
+    .coach-copy { position: absolute; z-index: 1; bottom: 22px; left: 22px; right: 18px; }
+    .coach-copy h3 { margin: 4px 0; font-size: 24px; }
+    .coach-copy p { margin: 0; color: #aeb6aa; font-size: 12px; }
+    .quote-section { background: var(--lime); color: var(--ink); padding: 105px 0; }
+    .quote { max-width: 920px; margin: auto; text-align: center; }
+    .quote blockquote { margin: 22px 0; font-family: Oswald, sans-serif; font-size: clamp(42px, 6vw, 75px); line-height: .98; text-transform: uppercase; letter-spacing: -.02em; }
+    .quote cite { font-size: 11px; font-style: normal; text-transform: uppercase; letter-spacing: .14em; }
+    .faq { background: var(--paper); color: var(--ink); }
+    .faq .eyebrow { color: #52633a; }
+    .faq-grid { display: grid; grid-template-columns: .8fr 1.2fr; gap: 80px; }
+    .faq h2 { margin: 15px 0 0; font-size: clamp(48px, 6vw, 82px); }
+    details { border-top: 1px solid rgba(11,12,11,.18); padding: 20px 0; }
+    details:last-child { border-bottom: 1px solid rgba(11,12,11,.18); }
+    summary { cursor: pointer; display: flex; align-items: center; justify-content: space-between; gap: 20px; list-style: none; font-weight: 800; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: '+'; font-size: 24px; font-weight: 400; }
+    details[open] summary::after { content: '−'; }
+    details p { max-width: 580px; margin: 14px 0 0; color: #5c665d; font-size: 13px; }
+    footer { background: var(--ink); padding: 70px 0 28px; }
+    .footer-top { display: grid; grid-template-columns: 1.4fr 1fr .7fr; gap: 60px; padding-bottom: 66px; }
+    .footer-brand { font-size: 24px; max-width: 340px; }
+    .footer-brand p { color: #929b91; font-size: 13px; margin: 18px 0 0; }
+    .footer h4 { margin: 0 0 18px; color: #828b81; font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: .16em; }
+    .footer-links { display: grid; gap: 9px; color: #c2c9bf; font-size: 13px; }
+    .footer-bottom { display: flex; justify-content: space-between; gap: 20px; padding-top: 23px; border-top: 1px solid var(--line); color: #697169; font-size: 10px; text-transform: uppercase; letter-spacing: .1em; }
+
+    .modal-backdrop { position: fixed; z-index: 30; inset: 0; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(4,5,4,.76); backdrop-filter: blur(12px); }
+    .modal-backdrop.open { display: flex; }
+    .modal { width: min(100%, 520px); padding: 34px; background: var(--paper); color: var(--ink); box-shadow: 0 24px 100px rgba(0,0,0,.45); position: relative; }
+    .modal h2 { margin: 10px 0 6px; font-size: 42px; }
+    .modal p { color: #657066; font-size: 13px; margin: 0 0 22px; }
+    .modal-close { position: absolute; top: 18px; right: 18px; }
+    .form { display: grid; gap: 12px; }
+    .form label { display: grid; gap: 6px; color: #667067; font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; }
+    .form input, .form select { border: 1px solid rgba(11,12,11,.2); border-radius: 2px; background: transparent; padding: 13px 12px; color: var(--ink); outline: none; }
+    .form input:focus, .form select:focus { border-color: #76963a; }
+    .form .btn { margin-top: 8px; color: var(--ink); background: var(--lime); border-color: var(--lime); }
+    .success { display: none; padding: 20px 0 4px; }
+    .success.show { display: block; }
+    .success strong { display: block; font-size: 24px; margin-bottom: 6px; }
+    .success p { margin: 0; }
+    .hidden-on-success { display: block; }
+    .modal.completed .hidden-on-success { display: none; }
+
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: .01ms !important; } .reveal { opacity: 1; transform: none; } }
+    @media (max-width: 900px) {
+      .wrap { width: min(calc(100% - 34px), var(--max)); }
+      .nav-links, .nav-cta .btn { display: none; }
+      .mobile-toggle { display: grid; }
+      .nav-links.open { display: grid; position: absolute; top: 69px; left: 17px; right: 17px; gap: 0; padding: 10px; background: rgba(17,19,17,.97); border: 1px solid var(--line); margin: 0; }
+      .nav-links.open a { padding: 14px; border-bottom: 1px solid var(--line); }
+      .nav-links.open a:last-child { border-bottom: 0; }
+      .hero { min-height: 720px; padding-bottom: 56px; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .hero-side { display: none; }
+      .hero h1 { font-size: clamp(64px, 14vw, 105px); }
+      section { padding: 82px 0; }
+      .section-head { display: block; margin-bottom: 34px; }
+      .section-head p { margin-top: 18px; }
+      .intro-grid, .faq-grid { grid-template-columns: 1fr; gap: 36px; }
+      .intro-image { min-height: 420px; }
+      .intro-image img { min-height: 420px; }
+      .program-grid, .plan-grid { grid-template-columns: 1fr; }
+      .plan.featured { transform: none; }
+      .experience-grid, .coach-grid { grid-template-columns: 1fr; }
+      .experience-panel, .coach, .coach:first-child { min-height: 390px; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 35px; }
+      .footer-brand { grid-column: 1 / -1; }
+    }
+    @media (max-width: 520px) {
+      .brand span { max-width: 112px; line-height: 1.05; }
+      .hero h1 { font-size: 64px; }
+      .hero-actions { display: grid; }
+      .hero-actions .btn { width: 100%; }
+      .intro-stats { gap: 19px; justify-content: space-between; }
+      .stat strong { font-size: 26px; }
+      .experience-panel { padding: 28px; }
+      .experience-panel .btn { left: 28px; bottom: 28px; }
+      .footer-top { grid-template-columns: 1fr; }
+      .footer-bottom { display: grid; gap: 8px; }
+      .modal { padding: 25px; }
+    }
+  </style>
+</head>
+<body>
+  <header id="header">
+    <div class="wrap nav">
+      <a class="brand" href="#top" aria-label="The Mission Gym home"><span class="brand-mark" aria-hidden="true"></span><span>THE MISSION<br />GYM · EST. 2021</span></a>
+      <nav class="nav-links" id="navLinks" aria-label="Primary navigation">
+        <a href="#philosophy">Philosophy</a><a href="#programs">Programs</a><a href="#memberships">Memberships</a><a href="#faq">FAQ</a>
+      </nav>
+      <div class="nav-cta"><button class="btn btn-primary" data-open-modal>Start your mission <span>↗</span></button><button class="icon-btn mobile-toggle" id="mobileToggle" aria-label="Open menu">☰</button></div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <img class="hero-photo" src="https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?auto=format&fit=crop&w=2200&q=90" alt="Athlete training with a barbell in a dark gym" />
+      <div class="wrap hero-grid">
+        <div class="hero-copy reveal">
+          <div class="eyebrow mono">No shortcuts. Just work.</div>
+          <h1 class="display">Your mission.<span>Your strength.</span></h1>
+          <p class="hero-sub">A considered training space for people who show up with intent. Build the body. Sharpen the mind. Leave stronger.</p>
+          <div class="hero-actions"><button class="btn btn-primary" data-open-modal>Join the mission <span>↗</span></button><a class="btn" href="#memberships">Explore memberships <span>↓</span></a></div>
+        </div>
+        <div class="hero-side reveal"><div class="hero-note"><div><strong>EST. 2021</strong><span class="mono">Built for the committed</span></div><span class="brand-mark" aria-hidden="true"></span></div><div class="hero-scroll mono"><i></i><b></b> Scroll to explore</div></div>
+      </div>
+    </section>
+
+    <div class="ticker" aria-hidden="true"><div class="ticker-track"><span>Train hard</span><span>Stay consistent</span><span>Move with purpose</span><span>Earn your confidence</span><span>Train hard</span><span>Stay consistent</span><span>Move with purpose</span><span>Earn your confidence</span></div></div>
+
+    <section class="intro" id="philosophy">
+      <div class="wrap intro-grid">
+        <div class="intro-copy reveal"><div class="eyebrow mono">The Mission philosophy</div><h2 class="display">Built for the <em>strong.</em></h2><p>We believe training is less about chasing a look and more about creating a standard. The Mission is a focused, energising environment for people at every level who want to make progress feel inevitable.</p><div class="intro-stats"><div class="stat"><strong>01</strong><span>Intent over ego</span></div><div class="stat"><strong>02</strong><span>Consistency wins</span></div><div class="stat"><strong>03</strong><span>Community first</span></div></div></div>
+        <div class="intro-image reveal"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1400&q=85" alt="Premium gym equipment arranged in a training space" /><div class="image-caption mono">Every rep has a purpose.</div></div>
+      </div>
+    </section>
+
+    <section class="dark-section" id="programs">
+      <div class="wrap"><div class="section-head reveal"><div><div class="eyebrow mono">Training, your way</div><h2 class="display">Find your <span style="color:var(--lime)">edge.</span></h2></div><p>Different goals. Same standard. Build your week around the work that moves you forward.</p></div>
+        <div class="program-grid">
+          <article class="program-card reveal"><img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=1000&q=85" alt="Athlete training strength" /><span class="program-no mono">01 / Strength</span><span class="program-arrow">↗</span><h3 class="display">Build power.</h3><p>Progressive strength training for a stronger base.</p></article>
+          <article class="program-card reveal"><img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1000&q=85" alt="Athlete doing a focused workout" /><span class="program-no mono">02 / Conditioning</span><span class="program-arrow">↗</span><h3 class="display">Raise output.</h3><p>Conditioning that meets you where you are.</p></article>
+          <article class="program-card reveal"><img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?auto=format&fit=crop&w=1000&q=85" alt="Gym floor with modern equipment" /><span class="program-no mono">03 / Open gym</span><span class="program-arrow">↗</span><h3 class="display">Make it yours.</h3><p>Premium equipment. Clear space. Your pace.</p></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="plans" id="memberships">
+      <div class="wrap"><div class="section-head reveal"><div><div class="eyebrow mono">Memberships</div><h2 class="display">Choose your <span style="color:#749531">pace.</span></h2></div><p>Transparent, flexible membership options. Sample pricing shown for this concept — editable by the gym team.</p></div>
+        <div class="plan-grid">
+          <article class="plan reveal"><span class="mono">01 / flexible</span><h3>Monthly</h3><span class="duration">1 month · no long-term lock in</span><div class="price">₹2,400 <small>/ month</small></div><ul><li>Full open gym access</li><li>Movement onboarding</li><li>Member community</li></ul><button class="btn" data-plan="Monthly membership">Choose monthly <span>↗</span></button></article>
+          <article class="plan featured reveal"><span class="plan-badge">Most popular</span><span class="mono" style="color:var(--lime)">02 / committed</span><h3>Quarterly</h3><span class="duration">3 months · build your rhythm</span><div class="price">₹6,000 <small>/ 3 months</small></div><ul><li>Full open gym access</li><li>Movement onboarding</li><li>Quarterly progress check-in</li></ul><button class="btn btn-primary" data-plan="Quarterly membership">Choose quarterly <span>↗</span></button></article>
+          <article class="plan reveal"><span class="mono">03 / all in</span><h3>Annual</h3><span class="duration">12 months · your best year</span><div class="price">₹18,000 <small>/ year</small></div><ul><li>Full open gym access</li><li>Movement onboarding</li><li>Priority event access</li></ul><button class="btn" data-plan="Annual membership">Choose annual <span>↗</span></button></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="experience" id="experience">
+      <div class="wrap"><div class="section-head reveal"><div><div class="eyebrow mono">Inside The Mission</div><h2 class="display">More than <span style="color:var(--lime)">a workout.</span></h2></div><p>Thoughtful details, a focused floor, and the kind of energy that makes consistency easier.</p></div>
+        <div class="experience-grid"><article class="experience-panel reveal"><img src="https://images.unsplash.com/photo-1576678927484-cc907957088c?auto=format&fit=crop&w=1400&q=85" alt="Trainer coaching an athlete in a modern gym" /><span class="mono" style="color:var(--lime)">01 / Coaching</span><h3 class="display">A little guidance goes a long way.</h3><p>Book a one-to-one introduction, get your movement foundations right, and train with a plan.</p><button class="btn" data-open-modal>Book a free trial <span>↗</span></button></article><article class="experience-panel dash-preview reveal"><div class="dash-top"><span class="tag">Member preview</span><span class="dash-avatar">AK</span></div><h3 class="display">Your work,<br /><span style="color:var(--lime)">kept in view.</span></h3><div class="dash-row"><span>Current streak</span><strong>12 days</strong></div><div class="dash-row"><span>This month</span><strong>14 / 18 sessions</strong></div><div class="progress"><i></i></div><div class="dash-row"><span>Next focus</span><strong>Lower body power</strong></div><button class="btn" id="dashboardBtn">Preview member portal <span>↗</span></button></article></div>
+      </div>
+    </section>
+
+    <section class="coaches" id="coaches"><div class="wrap"><div class="section-head reveal"><div><div class="eyebrow mono">The people behind the floor</div><h2 class="display">Train with <span style="color:var(--lime)">intent.</span></h2></div><p>Sample team profiles for the concept. Replace with your confirmed coaching team when ready.</p></div><div class="coach-grid"><article class="coach reveal"><img src="https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?auto=format&fit=crop&w=1300&q=85" alt="Coach in a training space" /><div class="coach-copy"><span class="mono" style="color:var(--lime)">Strength / Movement</span><h3>Arjun Kapoor</h3><p>Builds strong foundations and better movement.</p></div></article><article class="coach reveal"><img src="https://images.unsplash.com/photo-1594381898411-846e7d193883?auto=format&fit=crop&w=900&q=85" alt="Coach portrait in gym" /><div class="coach-copy"><span class="mono" style="color:var(--lime)">Conditioning</span><h3>Maya Shah</h3><p>Turns effort into repeatable output.</p></div></article><article class="coach reveal"><img src="https://images.unsplash.com/photo-1579758629938-03607ccdbaba?auto=format&fit=crop&w=900&q=85" alt="Coach guiding an athlete" /><div class="coach-copy"><span class="mono" style="color:var(--lime)">Performance</span><h3>Rohan Mehta</h3><p>Helps you train for what matters outside the gym.</p></div></article></div></div></section>
+
+    <section class="quote-section"><div class="wrap quote reveal"><div class="mono">The standard is yours.</div><blockquote>“You do not rise to the level of your goals. You fall to the level of your systems.”</blockquote><cite>— A reminder for every training day</cite></div></section>
+
+    <section class="faq" id="faq"><div class="wrap faq-grid"><div class="reveal"><div class="eyebrow mono">Good to know</div><h2 class="display">Questions,<br />answered.</h2></div><div class="reveal"><details open><summary>Can I try the gym before joining?</summary><p>Yes. Use the free trial form to share your details and our team can arrange an introduction to the space and a simple movement session.</p></details><details><summary>Which membership is right for me?</summary><p>Monthly is designed for flexibility, quarterly for building a consistent rhythm, and annual for members who are ready to make training a long-term priority.</p></details><details><summary>Do I need a training plan?</summary><p>Not at all. You can use the open gym independently or start with an onboarding session to help you build a plan around your goals.</p></details><details><summary>Is this the final pricing?</summary><p>These are editable sample prices included to demonstrate the membership experience. The gym team can update pricing, offers, benefits, and add-ons later.</p></details></div></div></section>
+  </main>
+
+  <footer><div class="wrap"><div class="footer-top"><div class="footer-brand"><a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"></span><span>THE MISSION GYM</span></a><p>A premium training space for people who choose to show up. Est. 2021.</p></div><div><h4>Explore</h4><div class="footer-links"><a href="#philosophy">Philosophy</a><a href="#programs">Programs</a><a href="#memberships">Memberships</a><a href="#coaches">Coaches</a></div></div><div><h4>Visit</h4><div class="footer-links"><span>Mon — Sun · 6am — 10pm</span><span>Location to be added</span><a href="mailto:hello@themissiongym.in">hello@themissiongym.in</a></div></div></div><div class="footer-bottom"><span>© 2021 — 2026 The Mission Gym</span><span>Built for the committed ↗</span></div></div></footer>
+
+  <div class="modal-backdrop" id="modalBackdrop" role="dialog" aria-modal="true" aria-label="Start your mission"><div class="modal" id="modal"><button class="icon-btn modal-close" id="modalClose" aria-label="Close dialog">×</button><div class="hidden-on-success"><div class="eyebrow mono" style="color:#52633a">Start here</div><h2 class="display">Make your<br />first move.</h2><p>Share a few details and we’ll help you find the right starting point.</p><form class="form" id="trialForm"><label>Name<input name="name" required placeholder="Your name" /></label><label>Mobile<input name="phone" required type="tel" placeholder="+91 00000 00000" /></label><label>What are you looking for?<select name="plan"><option>Free trial</option><option>Monthly membership</option><option>Quarterly membership</option><option>Annual membership</option></select></label><button class="btn" type="submit">Send enquiry <span>↗</span></button></form></div><div class="success" id="success"><span class="tag">Request received</span><strong>You’re on the list.</strong><p>Thanks — this concept flow is ready to connect to the gym’s enquiry CRM when the backend is added.</p><button class="btn btn-dark" style="margin-top:20px" id="successClose">Back to site</button></div></div></div>
+  <script>
+    const header = document.getElementById('header');
+    const navLinks = document.getElementById('navLinks');
+    const mobileToggle = document.getElementById('mobileToggle');
+    window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 20), {passive:true});
+    mobileToggle.addEventListener('click', () => navLinks.classList.toggle('open'));
+    navLinks.querySelectorAll('a').forEach(link => link.addEventListener('click', () => navLinks.classList.remove('open')));
+
+    const observer = new IntersectionObserver(entries => entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); }), {threshold: .12});
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    const backdrop = document.getElementById('modalBackdrop');
+    const modal = document.getElementById('modal');
+    const openModal = (plan = '') => { backdrop.classList.add('open'); document.body.classList.add('modal-open'); modal.classList.remove('completed'); const select = modal.querySelector('select'); if (plan) select.value = plan; setTimeout(() => modal.querySelector('input')?.focus(), 60); };
+    const closeModal = () => { backdrop.classList.remove('open'); document.body.classList.remove('modal-open'); };
+    document.querySelectorAll('[data-open-modal]').forEach(btn => btn.addEventListener('click', () => openModal()));
+    document.querySelectorAll('[data-plan]').forEach(btn => btn.addEventListener('click', () => openModal(btn.dataset.plan)));
+    document.getElementById('modalClose').addEventListener('click', closeModal);
+    document.getElementById('successClose').addEventListener('click', closeModal);
+    backdrop.addEventListener('click', e => { if (e.target === backdrop) closeModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+    document.getElementById('trialForm').addEventListener('submit', e => { e.preventDefault(); modal.classList.add('completed'); document.getElementById('success').classList.add('show'); });
+    document.getElementById('dashboardBtn').addEventListener('click', () => openModal('Free trial'));
+  </script>
+</body>
+</html>
